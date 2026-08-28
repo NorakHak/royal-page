@@ -1,0 +1,420 @@
+/* ==========================================================================
+   Royal Interiors — Coming Soon Page
+   ========================================================================== */
+
+:root {
+  /* Overlay + footer tuned to sit well over images/royal-page-hero.jpg
+     (warm white walls, herringbone wood floor, oxblood + gold accents). */
+  --color-bg-dark: #1c1815;
+  --color-cream: #f4ede2;
+  --color-gold: #c9a66b;
+  --color-muted: #cfc3b0;
+  --overlay-a: rgba(46, 32, 22, 0.18);
+  --overlay-b: rgba(32, 22, 15, 0.58);
+  --overlay-c: rgba(18, 12, 8, 0.88);
+  --color-contact-bg: #f4ede2;
+  --color-contact-text: #241f1a;
+  --color-contact-muted: #5c5347;
+  --color-footer-bg: #d8c9b3;
+  --color-footer-text: #4a3c2c;
+
+  --font-serif: Georgia, "Times New Roman", Times, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --container-width: 640px;
+  --transition-fast: 0.25s ease;
+  --transition-slow: 0.6s ease;
+}
+
+/* ---- Reset & base ---- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* no horizontal scrolling */
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg-dark);
+  color: var(--color-cream);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+ul {
+  margin: 0;
+}
+
+/* ---- Fade-in on load ---- */
+.fade-in {
+  animation: fadeIn 1s ease both;
+}
+
+.hero .fade-in {
+  animation-delay: 0.1s;
+}
+
+.contact.fade-in {
+  animation-delay: 0.15s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   Hero section
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8vh 1.5rem;
+
+  /* ============================================================
+     1. REPLACE BACKGROUND IMAGE
+     Currently images/royal-page-hero.jpg. Swap for a different
+     high-resolution photo (at least 1920x1080, .jpg or .webp) by
+     updating the filename/path below — the gradient + vignette in
+     .hero::before will keep working with any warm, light interior
+     shot; retune the --overlay-a/b/c colors above if the new photo
+     has a very different color temperature.
+  ============================================================= */
+  background-image: url("images/royal-page-hero.jpg");
+  background-size: cover;
+  background-position: center 38%;
+  background-repeat: no-repeat;
+  background-color: var(--color-bg-dark); /* fallback while image loads */
+}
+
+/* Warm gradient + soft vignette: keeps the photo bright and airy up
+   top, fades into a warm dark scrim toward the bottom so the text
+   sitting there stays legible. Colors are tuned to the wood floor
+   and oxblood/gold accents in the photo rather than flat black. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 85% at 50% 15%, rgba(0, 0, 0, 0) 0%, rgba(10, 7, 5, 0.3) 100%),
+    linear-gradient(to bottom, var(--overlay-a) 0%, var(--overlay-b) 55%, var(--overlay-c) 100%);
+  transition: background var(--transition-slow);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-width);
+  width: 100%;
+  margin: 0 auto;
+  /* Keeps text legible over the brighter, upper part of the photo
+     without needing a heavier overlay that would dull the room. */
+  text-shadow: 0 2px 16px rgba(15, 10, 6, 0.45);
+}
+
+.brand-name {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0 0 0.6rem;
+}
+
+.tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--color-muted);
+  font-size: clamp(1rem, 2.4vw, 1.2rem);
+  margin: 0 0 1.5rem;
+}
+
+/* ---- Pill badges ----
+   Shared thin-outline pill used for both the heritage marker
+   ("Since 1995") and the coming-soon status, so they read as one
+   consistent visual language instead of two different components. */
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0 0 2.25rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  padding: 0.35rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.pill--status {
+  letter-spacing: 0.1em;
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 0.6rem;
+  column-gap: 1.5rem;
+  font-size: 0.92rem;
+  color: var(--color-cream);
+}
+
+.features li {
+  position: relative;
+  padding-left: 1.1rem;
+}
+
+.features li::before {
+  content: "\25C6"; /* small gold diamond bullet */
+  position: absolute;
+  left: 0;
+  color: var(--color-gold);
+  font-size: 0.6rem;
+  top: 0.35em;
+}
+
+/* Small "in progress" indicator used inside the status pill —
+   kept subtle: a small dot with a gently expanding ring. */
+.pulse-dot {
+  position: relative;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  flex-shrink: 0;
+}
+
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid var(--color-gold);
+  opacity: 0.6;
+  animation: pulseRing 2.6s ease-out infinite;
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.7;
+  }
+  75% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot::after {
+    animation: none;
+  }
+}
+
+.coming-soon {
+  max-width: 480px;
+  margin: 0 auto;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--color-muted);
+}
+
+.coming-soon strong {
+  color: var(--color-cream);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Contact section
+   ========================================================================== */
+
+.contact {
+  background: var(--color-contact-bg);
+  color: var(--color-contact-text);
+  text-align: center;
+  padding: 5rem 1.5rem;
+  transition: background var(--transition-slow), color var(--transition-slow);
+}
+
+.contact h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 1rem;
+  color: var(--color-contact-text);
+  margin: 0 0 2rem;
+}
+
+.contact address {
+  font-style: normal;
+  line-height: 1.8;
+  margin: 0 0 1.5rem;
+  font-size: 1rem;
+}
+
+.phones {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+.phones a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition-fast);
+}
+
+.phones a:hover,
+.phones a:focus-visible {
+  border-color: currentColor;
+}
+
+.hours {
+  margin: 0 0 2.5rem;
+  color: var(--color-contact-muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+}
+
+/* ---- Social / location links ---- */
+.social {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2.25rem;
+}
+
+.social a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--color-contact-text);
+  opacity: 0.8;
+  transition: opacity var(--transition-fast);
+}
+
+.social a:hover,
+.social a:focus-visible {
+  opacity: 1;
+}
+
+.social .label {
+  position: relative;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.social .label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--transition-fast);
+}
+
+.social a:hover .label::after,
+.social a:focus-visible .label::after {
+  transform: scaleX(1);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.site-footer {
+  background: var(--color-footer-bg);
+  color: var(--color-footer-text);
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  transition: background var(--transition-slow), color var(--transition-slow);
+}
+
+/* ==========================================================================
+   Responsive adjustments
+   ========================================================================== */
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 6rem 1.25rem;
+  }
+
+  .features {
+    flex-direction: column;
+    row-gap: 0.5rem;
+    align-items: flex-start;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+    max-width: 100%;
+  }
+
+  .social {
+    gap: 1.75rem;
+  }
+
+  .contact {
+    padding: 3.5rem 1.25rem;
+  }
+}
